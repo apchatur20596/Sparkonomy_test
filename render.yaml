@@ -17,16 +17,16 @@ services:
         # Update this after the frontend URL is known
         value: https://sparkonomy-frontend.onrender.com
 
-  - type: static
+  - type: static_site
     name: sparkonomy-frontend
     rootDir: frontend
     plan: free
     buildCommand: npm install && npm run build
-    staticPublishPath: dist
+    publishPath: dist
     envVars:
       - key: VITE_API_URL
         fromService:
           type: web
           name: sparkonomy-backend
           property: url
-        # Will resolve to https://sparkonomy-backend.onrender.com, append /api at runtime in code
+        # Will resolve to https://sparkonomy-backend.onrender.com, appends /api at runtime
