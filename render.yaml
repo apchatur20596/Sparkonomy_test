@@ -6,7 +6,7 @@ services:
     rootDir: backend
     plan: free
     buildCommand: npm install && npx prisma generate
-    startCommand: npm start
+    startCommand: sh -c "npx prisma migrate deploy || npx prisma db push; npm start"
     envVars:
       - key: NODE_VERSION
         value: 20
