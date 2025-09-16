@@ -7,13 +7,15 @@ services:
     plan: free
     buildCommand: npm install && npx prisma generate
     startCommand: npm start
+    disk:
+      name: app-data
+      mountPath: /opt/data
+      sizeGB: 1
     envVars:
       - key: NODE_VERSION
         value: 20
-      - key: PORT
-        value: 10000
       - key: DATABASE_URL
-        value: file:./prisma/dev.db
+        value: file:/opt/data/dev.db
       - key: CORS_ORIGINS
         value: https://sparkonomy-frontend.onrender.com
 
