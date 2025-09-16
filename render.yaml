@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: sparkonomy-backend
+    env: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install && npx prisma generate
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        value: file:./dev.db
+      - key: CORS_ORIGINS
+        # Update this after the frontend URL is known
+        value: https://sparkonomy-frontend.onrender.com
+
+  - type: static
+    name: sparkonomy-frontend
+    rootDir: frontend
+    plan: free
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: sparkonomy-backend
+          property: url
+        # Will resolve to https://sparkonomy-backend.onrender.com, append /api at runtime in code
